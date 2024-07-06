@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, ActivityIndicator, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CategorySlider from '../Components/Home/CategorySlider'
 import Color from '../Shared/Color'
@@ -9,16 +9,22 @@ import GlobalApi from '../Services/GlobalApi';
 
 const Home = () => {
     const [newsList, setNewsList] = useState([]);
+    const [loading, setLoading] = useState(true)
     useEffect(() => {
-        getTopHeadline();
+        // getTopHeadline();
+        getNewsByCategory('latest');
     }, [])
 
-    const getTopHeadline = async () => {
-        const result = (await GlobalApi.getTopHeadline).data;
-        setNewsList(result.articles)
+    const getNewsByCategory = async (category) => {
+        setLoading(true);
+        const result = (await GlobalApi.getByCategory(category)).data;
+        console.log(result)
+        setNewsList(result.articles);
+        setLoading(false)
     }
     return (
-        <ScrollView style={{backgroundColor: Color.white}}>
+        <ScrollView style={{ backgroundColor: Color.white }}>
+
             <View style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -30,13 +36,19 @@ const Home = () => {
             </View>
 
             {/* CategoryList */}
-            <CategorySlider />
+            <CategorySlider selectCategory={(category) => getNewsByCategory(category)} />
+            {loading ? <ActivityIndicator
+                style={{ marginTop:Dimensions.get('screen').height*0.35 }}
+                size={'large'}
+                color={Color.primary} /> :
+                <View>
+                    {/* TopHeader */}
+                    <TopHeader newsList={newsList} />
 
-            {/* TopHeader */}
-            <TopHeader newsList={newsList} />
-
-            {/* Headline List */}
-            <HeaderList newsList={newsList} />
+                    {/* Headline List */}
+                    <HeaderList newsList={newsList} />
+                </View>
+            }
         </ScrollView>
     )
 }

@@ -1,8 +1,9 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect } from 'react'
-import { View, Text, Image, TouchableOpacity, Share } from 'react-native'
+import { View, Text, Image, TouchableOpacity, Share, ScrollView } from 'react-native'
 import Color from '../Shared/Color';
 import { Ionicons } from '@expo/vector-icons';
+import *as WebBrowser from 'expo-web-browser';
 
 function ReadNews() {
   const news = useRoute().params.news;
@@ -17,7 +18,7 @@ function ReadNews() {
     })
   }
   return (
-    <View style={{ backgroundColor: Color.white, flex: 1 }}>
+    <ScrollView style={{ backgroundColor: Color.white, flex: 1 }}>
       <View style={{
         marginBottom: 20,
         marginTop: 10,
@@ -39,10 +40,10 @@ function ReadNews() {
       <Text style={{ marginTop: 10, fontWeight: 'bold', fontSize: 22 }}>{news.title}</Text>
       <Text style={{ marginTop: 10, color: Color.primary, fontSize: 16 }}>{news.source.name}</Text>
       <Text style={{ marginTop: 10, fontSize: 19, color: Color.gray, lineHeight: 24 }}>{news.description}</Text>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => WebBrowser.openBrowserAsync(news.url)}>
         <Text style={{ marginTop: 10, color: Color.primary, fontSize: 16, fontWeight: 'bold' }}>Read More</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   )
 }
 
