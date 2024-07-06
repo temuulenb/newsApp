@@ -9,7 +9,7 @@ function HeaderList({ newsList }) {
                 data={newsList}
                 renderItem={({ item }) => (
                     <View>
-                        <View style={{height:1, backgroundColor:Color.lightGray, marginTop:10, marginLeft:-20}}></View>
+                        <View style={{ height: 1, backgroundColor: Color.lightGray, marginTop: 10, marginLeft: -20 }}></View>
                         <TouchableOpacity style={{ marginTop: 17, display: 'flex', flexDirection: 'row' }}>
                             <Image source={{ uri: item.urlToImage }}
                                 style={{ width: 130, height: 130, borderRadius: 10 }}
@@ -18,7 +18,7 @@ function HeaderList({ newsList }) {
                                 <Text numberOfLines={3} style={{ fontSize: 15, fontWeight: 500 }}>{item.title}</Text>
                                 <Text style={{ color: Color.primary, marginTop: 8 }}>{item?.source.name}</Text>
                             </View>
-                        </TouchableOpacity>                 
+                        </TouchableOpacity>
                     </View>
                 )}
             />

@@ -10,16 +10,21 @@ import GlobalApi from '../Services/GlobalApi';
 const Home = () => {
     const [newsList, setNewsList] = useState([]);
     useEffect(() => {
-       getTopHeadline();
+        getTopHeadline();
     }, [])
 
-    const getTopHeadline = async() => {
+    const getTopHeadline = async () => {
         const result = (await GlobalApi.getTopHeadline).data;
         setNewsList(result.articles)
     }
     return (
-        <ScrollView>
-            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-between', alignItems:'center'}}>
+        <ScrollView style={{backgroundColor: Color.white}}>
+            <View style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+            }}>
                 <Text style={styles.appName}>News</Text>
                 <Ionicons name="notifications-outline" size={24} color="black" />
             </View>
@@ -28,10 +33,10 @@ const Home = () => {
             <CategorySlider />
 
             {/* TopHeader */}
-            <TopHeader newsList={newsList}/>
+            <TopHeader newsList={newsList} />
 
             {/* Headline List */}
-            <HeaderList newsList={newsList}/>
+            <HeaderList newsList={newsList} />
         </ScrollView>
     )
 }
